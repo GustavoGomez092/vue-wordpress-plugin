@@ -9,7 +9,7 @@ import HelloWorld from './components/HelloWorld.vue'
   
 </template>
 
-<style scoped>
+<style>
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
