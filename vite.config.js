@@ -12,6 +12,7 @@ export default defineConfig({
       // the proper extensions will be added
       fileName: 'vue-wp',
     },
+    outDir: './dist/dist'
   },
   define: {
     'process.env': {}
