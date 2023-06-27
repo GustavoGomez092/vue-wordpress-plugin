@@ -9,7 +9,9 @@ const count = ref(0)
 </script>
 
 <template>
-  <h1 class="text-red-500">{{ msg }}</h1>
+  <div class="container mx-auto my-20">
+    <h1 class="text-red-500 text-3xl">{{ msg }}</h1>
+  </div>
 </template>
 
 <style scoped>

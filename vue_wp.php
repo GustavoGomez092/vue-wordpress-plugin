@@ -9,21 +9,66 @@ Author URI: https://github.com/GustavoGomez092
 
 class WpVue {
 
-protected $plugin_options_page = '';
+    protected $plugin_options_page = '';
 
-/**
-* Class constructor
-*/
-public function __construct() {
-require('plugin_options.php');
-}
+    /**
+    * Class constructor
+    */
+    public function __construct() {
+    require('plugin_options.php');
+    }
 
-/**
-* Initialize hooks.
-*/
-public function init() {
+    /**
+     * Inserting nonce to window object for admin
+     */
+    public function add_nonce() {
+        wp_register_script(
+            'custom-js-file', 
+            plugins_url( "custom.js", __FILE__ ), 
+            [], 
+            null, 
+            false 
+        );
+        
+        wp_enqueue_script('custom-js-file');
+    }
 
-}
+    /**
+     * Custom API endpoints for admin
+     */
+
+    public function get_user(WP_REST_Request $request) {
+        $user = wp_get_current_user();
+        return $user;
+    }
+
+    public function api_init() {
+        register_rest_route('wp-vue/v1', '/user/', [
+            'methods'   => 'GET',
+            'callback'  => [$this, 'get_user'],
+            'permission_callback'   => function () {
+                    return current_user_can('manage_options');
+            }
+        ]);
+    }
+
+    /**
+    * Initialize hooks.
+    */
+    public function init() {
+        add_action('rest_api_init', [$this , 'api_init']); 
+        
+        // adding nonce to the window object if logged in
+        add_action('admin_enqueue_scripts', function() {
+            if ( is_user_logged_in() ) {
+                $this->add_nonce();
+                wp_localize_script('custom-js-file', 'wpApiSettings', array(
+                'root' => esc_url_raw(rest_url()),
+                'nonce' => wp_create_nonce('wp_rest')
+                ));
+            }
+        });   
+    }
 }
 
 function add_type_attribute($tag, $handle, $src)
