@@ -43,7 +43,6 @@ function fromDir(startPath, filter) {
 
     // create Zip
     if(process.argv[2]) {
-      console.log(process.argv[2])
       zip.writeZip(`./${process.argv[2]}.zip`)
     } else {
       zip.writeZip("./plugin.zip")
