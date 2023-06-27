@@ -29,7 +29,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="container mx-auto">
+  <div v-if="data" class="container mx-auto">
     <HelloWorld :msg="`Hello from the admin side ${data.data.display_name}!`" />
   </div>
   
