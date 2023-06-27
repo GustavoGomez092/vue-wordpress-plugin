@@ -71,7 +71,7 @@ class WpVue {
     }
 }
 
-function add_type_attribute($tag, $handle, $src)
+function add_type_attribute_front($tag, $handle, $src)
 {
     // change the script tag by adding type="module" and return it.
     if ($handle  === 'wp-vue-plugin-dev' || $handle  === 'wp-vue-plugin-prod') {
@@ -88,7 +88,7 @@ $wp_vue->init();
 function plugin_shortcode( $atts ) {
 $handle = 'wp-vue-plugin-';
 
-add_filter('script_loader_tag', 'add_type_attribute', 10, 3);
+add_filter('script_loader_tag', 'add_type_attribute_front', 10, 3);
 
 // enqueue development or production Vue code
 if(file_exists(dirname(__FILE__) . "/dist/vue-wp.js")) {
