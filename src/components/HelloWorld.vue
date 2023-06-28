@@ -5,12 +5,12 @@ defineProps({
   msg: String,
 })
 
-const count = ref(0)
+
 </script>
 
 <template>
-  <div class="container mx-auto my-20">
-    <h1 class="text-red-500 text-3xl">{{ msg }}</h1>
+  <div class="container mx-auto mb-6">
+    <h1 class="text-green-500 text-3xl">{{ msg }}</h1>
   </div>
 </template>
 

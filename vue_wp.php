@@ -7,6 +7,7 @@ Author: Gustavo Gomez
 Author URI: https://github.com/GustavoGomez092
 */
 
+
 class WpVue {
 
     protected $plugin_options_page = '';
@@ -16,6 +17,27 @@ class WpVue {
     */
     public function __construct() {
     require('plugin_options.php');
+    }
+
+    /**
+     * Plugin shortcode for front-end
+     */
+    function plugin_shortcode( $atts ) {
+        $handle = 'wp-vue-plugin-';
+
+        add_filter('script_loader_tag', 'add_type_attribute_front', 10, 3);
+
+        // enqueue development or production Vue code
+        if(file_exists(dirname(__FILE__) . "/dist/vue-wp.js")) {
+        $handle .= 'prod';
+        wp_enqueue_script( $handle, plugins_url( "/dist/vue-wp.js", __FILE__ ), ['wp-element'], '0.1', true );
+        wp_enqueue_style( $handle, plugins_url( "/dist/style.css", __FILE__ ), false, '0.1', 'all' );
+        } else {
+        $handle .= 'dev';
+        wp_enqueue_script( $handle, 'http://localhost:5173/src/main.js', ['wp-element'], '0.1', true );
+
+        }
+        return "<div id='wp-vue'></div>";
     }
 
     /**
@@ -56,6 +78,7 @@ class WpVue {
     * Initialize hooks.
     */
     public function init() {
+        add_shortcode( 'wp-vue', [$this, 'plugin_shortcode'] );
         add_action('rest_api_init', [$this , 'api_init']); 
         
         // adding nonce to the window object if logged in
@@ -84,23 +107,3 @@ function add_type_attribute_front($tag, $handle, $src)
 
 $wp_vue = new WpVue();
 $wp_vue->init();
-
-function plugin_shortcode( $atts ) {
-$handle = 'wp-vue-plugin-';
-
-add_filter('script_loader_tag', 'add_type_attribute_front', 10, 3);
-
-// enqueue development or production Vue code
-if(file_exists(dirname(__FILE__) . "/dist/vue-wp.js")) {
-$handle .= 'prod';
-wp_enqueue_script( $handle, plugins_url( "/dist/vue-wp.js", __FILE__ ), ['wp-element'], '0.1', true );
-wp_enqueue_style( $handle, plugins_url( "/dist/style.css", __FILE__ ), false, '0.1', 'all' );
-} else {
-$handle .= 'dev';
-wp_enqueue_script( $handle, 'http://localhost:5173/src/main.js', ['wp-element'], '0.1', true );
-
-}
-return "<div id='wp-vue'></div>";
-}
-
-add_shortcode( 'wp-vue', 'plugin_shortcode' );

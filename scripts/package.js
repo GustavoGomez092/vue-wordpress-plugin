@@ -28,29 +28,55 @@ function fromDir(startPath, filter) {
   return iterate(startPath, filter)
 }
 
-  // find PHP files
-  const files = fromDir('./', '.php')
+  // find all files
+// Recursive function to get files
+function getFiles(dir, files = []) {
+  // Get an array of all files and directories in the passed directory using fs.readdirSync
+  const fileList = fs.readdirSync(dir);
+  // Create the full path of the file/directory by concatenating the passed directory and file/directory name
+  for (const file of fileList) {
+      const name = `${dir}/${file}`;
+      if(
+        name.includes('node_modules') || 
+        name.includes('.git') || 
+        name.includes('src') || 
+        name.includes('.vscode') ||
+        name.includes('scripts') || 
+        name.includes('public') ||
+        name.includes('README.md') || 
+        name.includes('.gitignore') || 
+        name.includes('package.json') || 
+        name.includes('package-lock.json') ||
+        name.includes('postcss.config.js') ||
+        name.includes('tailwind.config.js') || 
+        name.includes('vite.config.js') || 
+        name.includes('index.html')
+      ) continue;
+      // Check if the current file/directory is a directory using fs.statSync
+      if (fs.statSync(name).isDirectory()) {
+        // If it is a directory, recursively call the getFiles function with the directory path and the files array
+        zip.addLocalFolder(name, name)
+      } else {
+        // If it is a file, push the full path to the files array
+        zip.addLocalFile(name)
+      }
+  }
+  return files;
+}
 
-  //Add PHP files to the package
-  files.forEach(x => {
-    zip.addLocalFile(x)
-  })
+// add all files & folders to the Zip
+getFiles('.')
 
-  // create dist folder inside dist folder and move files there
-  mv('./dist', './plugin-dist/dist', {mkdirp: true}, function(err) {
-    // add dist folder
-    zip.addLocalFolder(resolve('./plugin-dist'))
-
-    // create Zip
-    if(process.argv[2]) {
-      zip.writeZip(`./${process.argv[2]}.zip`)
-    } else {
-      zip.writeZip("./plugin.zip")
-    }
+// create Zip
+if(process.argv[2]) {
+  zip.writeZip(`./${process.argv[2]}.zip`)
+} else {
+  zip.writeZip("./plugin.zip")
+}
 
 
-    // delete dist folder
-    fs.rmSync('./plugin-dist', { recursive: true, force: true })
-    fs.rmSync('./dist', { recursive: true, force: true })
-  })
+// delete dist folder
+fs.rmSync('./plugin-dist', { recursive: true, force: true })
+fs.rmSync('./dist', { recursive: true, force: true })
+
 
