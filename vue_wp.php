@@ -20,6 +20,20 @@ class WpVue {
     }
 
     /**
+     * Script tag modifier
+     */
+
+    public function add_type_attribute_front($tag, $handle, $src) {
+        // change the script tag by adding type="module" and return it.
+        if ($handle  === 'wp-vue-plugin-dev' || $handle  === 'wp-vue-plugin-prod') {
+            $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
+            return $tag;
+        }
+        // if not your script, do nothing and return original $tag
+        return $tag;
+    }
+
+    /**
      * Plugin shortcode for front-end
      */
     function plugin_shortcode( $atts ) {
@@ -92,17 +106,6 @@ class WpVue {
             }
         });   
     }
-}
-
-function add_type_attribute_front($tag, $handle, $src)
-{
-    // change the script tag by adding type="module" and return it.
-    if ($handle  === 'wp-vue-plugin-dev' || $handle  === 'wp-vue-plugin-prod') {
-        $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
-        return $tag;
-    }
-    // if not your script, do nothing and return original $tag
-    return $tag;
 }
 
 $wp_vue = new WpVue();

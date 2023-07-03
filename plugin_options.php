@@ -30,18 +30,18 @@ class plugin_options {
     echo '<div id="wp-vue-options"></div>';
   }
 
-  public function enqueue_admin_scripts($hook) {
-
-    function add_type_attribute_admin($tag, $handle, $src)
-      {
-          // change the script tag by adding type="module" and return it.
-          if ($handle  === 'wp-vue-plugin-options-dev') {
-              $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
-              return $tag;
-          }
-          // if not your script, do nothing and return original $tag
+  public function add_type_attribute_admin($tag, $handle, $src)
+  {
+      // change the script tag by adding type="module" and return it.
+      if ($handle  === 'wp-vue-plugin-options-dev') {
+          $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
           return $tag;
       }
+      // if not your script, do nothing and return original $tag
+      return $tag;
+  }
+
+  public function enqueue_admin_scripts($hook) {
 
     // Are we on the plugin options page?
     if( $hook === $this->plugin_options_page ) {
@@ -51,7 +51,7 @@ class plugin_options {
 
       $handle = 'wp-vue-plugin-options-';
 
-      add_filter('script_loader_tag', 'add_type_attribute_admin', 10, 3);
+      add_filter('script_loader_tag', array($this,'add_type_attribute_admin'), 10, 3);
 
       if(file_exists(dirname(__FILE__) . "/dist/vue-wp.js")) {
         $handle .= 'prod';
