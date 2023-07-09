@@ -17,6 +17,7 @@ class WpVue {
     */
     public function __construct() {
     require('plugin_options.php');
+    add_action('wp_enqueue_scripts', [$this, 'REST_API_DATA_LOCALIZER'] );
     }
 
     /**
@@ -34,12 +35,42 @@ class WpVue {
     }
 
     /**
+     * Initialize RADL
+     */
+    public function REST_API_DATA_LOCALIZER () {
+        // define the name of the file to be inserted
+        $name = 'serverData';
+
+        // add the data you want to pass from PHP to JS
+        // Data will be inserted in the window object with the name defined above
+
+        // Get ACF options
+        $plugin_options = array();
+
+        // Get custom data example
+        $custom_data = array(
+            'plugin_data' => array(
+                'main' => array(
+                    'plugin_name' => 'wp_vue_plugin',
+                    'plugin_version' => '1.0'
+                )
+            )
+        );
+
+        $normalized_array = array_merge($plugin_options, $custom_data);
+
+        wp_register_script( $name, '' );
+        wp_enqueue_script( $name );
+        wp_add_inline_script( $name, 'window.' . $name . ' = ' . wp_json_encode( $normalized_array ), 'after' );
+    }
+
+    /**
      * Plugin shortcode for front-end
      */
     function plugin_shortcode( $atts ) {
         $handle = 'wp-vue-plugin-';
 
-        add_filter('script_loader_tag', 'add_type_attribute_front', 10, 3);
+        add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
 
         // enqueue development or production Vue code
         if(file_exists(dirname(__FILE__) . "/dist/vue-wp.js")) {
