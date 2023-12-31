@@ -2,15 +2,14 @@
 import HelloWorld from './components/HelloWorld.vue'
 import {onBeforeMount, ref} from 'vue'
 import axios from 'axios'
-import backendStore from '@/composables/backendStore.js'
+
 
 const data = ref()
-const text = ref()
-const { state } = backendStore()
+
 
 const api = axios.create(
   {
-    baseURL: `/wp-json/wp-vue/v1/`,
+    baseURL: `/wp-json/WPVue/v1/`,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -33,11 +32,6 @@ onBeforeMount(async () => {
 <template>
   <div v-if="data" class="container mx-auto my-20">
     <HelloWorld :msg="`Hello from the admin side ${data.data.display_name}!`" />
-    <p class="mb-1">{{ state }}</p>
-    <input type="text" class="border border-black" v-model="text" />
-    <div class="flex gap-6 mt-4">
-      <button class="btn btn-blue" @click="state = {text}">set state</button>
-    </div>
   </div>
   
 </template>

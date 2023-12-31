@@ -2,11 +2,8 @@
 import HelloWorld from './components/HelloWorld.vue'
 import {onBeforeMount, ref} from 'vue'
 import axios from 'axios'
-import frontendStore from '@/composables/frontendStore.js'
 
 const data = ref()
-const { state } = frontendStore()
-const text = ref()
 
 const api = axios.create(
   {
@@ -39,12 +36,6 @@ onBeforeMount(async () => {
         <p class="text-[16px]" v-html="post.excerpt.rendered" />
       </div>
     </div>
-    <h2 class="text-2xl mb-2 mt-6">front-end store</h2>
-    <p class="mb-1">{{ state }}</p>
-    <input type="text" class="border border-black" v-model="text" />
-    <div class="flex gap-6 mt-4">
-      <button class="btn btn-blue" @click="state = {text}">set state</button>
-    </div>
   </div>
   
 </template>
@@ -58,7 +49,7 @@ onBeforeMount(async () => {
     @apply font-bold py-2 px-4 rounded;
 }
 .btn-blue {
-  @apply bg-blue-500 text-white;
+  @apply bg-white text-black;
 }
 .btn-blue:hover {
   @apply bg-blue-700;

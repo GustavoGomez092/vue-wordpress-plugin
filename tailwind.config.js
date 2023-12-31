@@ -1,3 +1,5 @@
+const { scopedPreflightStyles } = require('tailwindcss-scoped-preflight');
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,6 +9,10 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    scopedPreflightStyles({
+      cssSelector: '#WPVue',
+    }),
+  ],
 }
 

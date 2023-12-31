@@ -1,6 +1,6 @@
 <?php
 
-class plugin_options {
+class WPVue_plugin_options {
 
   protected $plugin_options_page = '';
 
@@ -15,7 +15,7 @@ class plugin_options {
   }
 
   public function register_plugin_settings() {
-      register_setting( 'wp-vue-settings-group', 'wp-vue-plugin' );
+      register_setting( 'WPVue-settings-group', 'WPVue-plugin' );
   }
 
   /**
@@ -27,13 +27,13 @@ class plugin_options {
   }
 
   public function render_plugin_options_page() {
-    echo '<div id="wp-vue-options"></div>';
+    echo '<div id="WPVue-options"></div>';
   }
 
   public function add_type_attribute_admin($tag, $handle, $src)
   {
       // change the script tag by adding type="module" and return it.
-      if ($handle  === 'wp-vue-plugin-options-dev') {
+      if ($handle  === 'WPVue-plugin-options-dev') {
           $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
           return $tag;
       }
@@ -49,7 +49,7 @@ class plugin_options {
       // add react and react-dom from core
       $dep = ['wp-element'];
 
-      $handle = 'wp-vue-plugin-options-';
+      $handle = 'WPVue-plugin-options-';
 
       add_filter('script_loader_tag', array($this,'add_type_attribute_admin'), 10, 3);
 
@@ -66,5 +66,5 @@ class plugin_options {
   }
 }
 
-$plugin_options = new plugin_options();
+$plugin_options = new WPVue_plugin_options();
 $plugin_options->init();

@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div class="container mx-auto mb-6">
-    <h1 class="text-green-500 text-3xl">{{ msg }}</h1>
+    <h1 class="text-green-600 text-3xl">{{ msg }}</h1>
   </div>
 </template>
 

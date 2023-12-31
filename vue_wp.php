@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: Vue WordPress Plugin
-Description: Use the [wp-vue] shortcode to display the plugin
-Version: 0.0.1
+Plugin Name: WPVue Plugin
+Description: Use the [WPVue] shortcode to display the plugin
+Version: 0.0.2
 Author: Gustavo Gomez
 Author URI: https://github.com/GustavoGomez092
 */
 
 
-class WpVue {
+class WPVue {
 
     protected $plugin_options_page = '';
 
@@ -26,7 +26,7 @@ class WpVue {
 
     public function add_type_attribute_front($tag, $handle, $src) {
         // change the script tag by adding type="module" and return it.
-        if ($handle  === 'wp-vue-plugin-dev' || $handle  === 'wp-vue-plugin-prod') {
+        if ($handle  === 'WPVue-plugin-dev' || $handle  === 'WPVue-plugin-prod') {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
             return $tag;
         }
@@ -39,7 +39,7 @@ class WpVue {
      */
     public function REST_API_DATA_LOCALIZER () {
         // define the name of the file to be inserted
-        $name = 'serverData';
+        $name = 'WPVueData';
 
         // add the data you want to pass from PHP to JS
         // Data will be inserted in the window object with the name defined above
@@ -68,7 +68,7 @@ class WpVue {
      * Plugin shortcode for front-end
      */
     function plugin_shortcode( $atts ) {
-        $handle = 'wp-vue-plugin-';
+        $handle = 'WPVue-plugin-';
 
         add_filter('script_loader_tag', [$this, 'add_type_attribute_front'], 10, 3);
 
@@ -82,7 +82,7 @@ class WpVue {
         wp_enqueue_script( $handle, 'http://localhost:5173/src/main.js', ['wp-element'], '0.1', true );
 
         }
-        return "<div id='wp-vue'></div>";
+        return "<div id='WPVue'></div>";
     }
 
     /**
@@ -110,7 +110,7 @@ class WpVue {
     }
 
     public function api_init() {
-        register_rest_route('wp-vue/v1', '/user/', [
+        register_rest_route('WPVue/v1', '/user/', [
             'methods'   => 'GET',
             'callback'  => [$this, 'get_user'],
             'permission_callback'   => function () {
@@ -123,7 +123,7 @@ class WpVue {
     * Initialize hooks.
     */
     public function init() {
-        add_shortcode( 'wp-vue', [$this, 'plugin_shortcode'] );
+        add_shortcode( 'WPVue', [$this, 'plugin_shortcode'] );
         add_action('rest_api_init', [$this , 'api_init']); 
         
         // adding nonce to the window object if logged in
@@ -139,5 +139,5 @@ class WpVue {
     }
 }
 
-$wp_vue = new WpVue();
+$wp_vue = new WPVue();
 $wp_vue->init();
