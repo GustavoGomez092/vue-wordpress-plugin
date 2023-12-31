@@ -82,7 +82,7 @@ class WPVue {
         wp_enqueue_script( $handle, 'http://localhost:5173/src/main.js', ['wp-element'], '0.1', true );
 
         }
-        return "<div id='WPVue'></div>";
+        return "<div id='WPVue' class='WPVue'></div>";
     }
 
     /**

@@ -27,7 +27,7 @@ class WPVue_plugin_options {
   }
 
   public function render_plugin_options_page() {
-    echo '<div id="WPVue-options"></div>';
+    echo '<div id="WPVue-options" class="WPVue"></div>';
   }
 
   public function add_type_attribute_admin($tag, $handle, $src)

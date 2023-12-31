@@ -8,12 +8,10 @@ if (process.platform === 'win32') {
 } else {
   UrlArray = __dirname.split('/')
 }
-const finalPath = UrlArray.slice(Math.max(UrlArray.length - 3, 0)).join('/')
 
 export default defineConfig(({ command, mode }) => {
   if (mode === 'development') {
     return {
-      base: `/${finalPath}/`,
       resolve: {
         alias: [
           { find: '@', replacement: path.resolve(__dirname, 'src') }
@@ -39,7 +37,6 @@ export default defineConfig(({ command, mode }) => {
   }
   if (mode === 'production') {
     return {
-      base: `/${finalPath}/dist`,
       resolve: {
         alias: [
           { find: '@', replacement: path.resolve(__dirname, 'src') }

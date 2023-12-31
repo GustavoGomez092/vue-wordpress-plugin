@@ -27,13 +27,13 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="container mx-auto my-20">
+  <div class="tw-container tw-mx-auto my-20">
     <HelloWorld msg="Hello fron the client side" />
-    <h2 class="text-2xl mb-2">Posts</h2>
+    <h2 class="tw-text-2xl tw-mb-2">Posts</h2>
     <div class="posts-container" v-if="data">
       <div class="single-post" v-for="(post, index) of data" :key="index">
-        <h3 class="text-xl">{{ post.title.rendered }}</h3>
-        <p class="text-[16px]" v-html="post.excerpt.rendered" />
+        <h3 class="tw-text-xl">{{ post.title.rendered }}</h3>
+        <p class="tw-text-[16px]" v-html="post.excerpt.rendered" />
       </div>
     </div>
   </div>
@@ -44,15 +44,5 @@ onBeforeMount(async () => {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.btn {
-    @apply font-bold py-2 px-4 rounded;
-}
-.btn-blue {
-  @apply bg-white text-black;
-}
-.btn-blue:hover {
-  @apply bg-blue-700;
-}
 
 </style>

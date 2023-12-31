@@ -30,7 +30,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div v-if="data" class="container mx-auto my-20">
+  <div v-if="data" class="tw-container tw-mx-auto tw-my-20">
     <HelloWorld :msg="`Hello from the admin side ${data.data.display_name}!`" />
   </div>
   
@@ -41,14 +41,5 @@ onBeforeMount(async () => {
 @tailwind components;
 @tailwind utilities;
 
-.btn {
-  @apply font-bold py-2 px-4 rounded;
-}
-.btn-blue {
-  @apply bg-blue-500 text-white;
-}
-.btn-blue:hover {
-  @apply bg-blue-700;
-}
 
 </style>
