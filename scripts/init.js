@@ -79,6 +79,7 @@ const nameReplace = async (appName) => {
             file.includes('vue_wp.php') ||
             file.includes('plugin_options.php') || 
             file.includes('main.js') ||
+            file.includes('AdminApp.vue') ||
             file.includes('tailwind.config.js')
           ) results.push(file);
         }
