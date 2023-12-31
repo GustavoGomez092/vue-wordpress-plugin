@@ -4,10 +4,20 @@ This template should help get you started developing Wordpress plugins using Vue
 
 ## Scripts
 
-```npm run dev``` Runs your Vite development server
-<br/>
-<br/>
-```npm run build``` Builds the dist folder for testing the build
-<br>
-<br/>
-```npm run package ${plugin-name}``` Creates a zip file with all necessary files for deploying to a WordPress installation.
+To start your project:<br/>
+```git clone https://github.com/GustavoGomez092/vue-wordpress-plugin.git```
+
+Change directory into the project folder:<br/>
+```cd vue-wordpress-plugin```
+
+Install dependencies:<br/>
+```npm install```
+
+Before starting development:<br/>
+```npm run init```
+
+Development server:<br/>
+```npm run dev```
+
+Package to zip:<br/>
+```npm run package {{zipName}}```
