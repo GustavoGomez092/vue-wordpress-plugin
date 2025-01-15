@@ -7,26 +7,26 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "package": "vite build && node ./scripts/package.js",
-    "init": "node ./scripts/init.js"
+    "package": "vite build && node ./scripts/package.mjs",
+    "init": "node ./scripts/init.mjs"
   },
   "dependencies": {
-    "axios": "^1.4.0",
-    "vue": "^3.2.47"
+    "axios": "^1.7.9",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@inquirer/prompts": "^3.3.0",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "adm-zip": "^0.5.10",
-    "autoprefixer": "^10.4.14",
-    "chalk": "^5.3.0",
+    "@inquirer/prompts": "^7.2.3",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "adm-zip": "^0.5.16",
+    "autoprefixer": "^10.4.20",
+    "chalk": "^5.4.1",
     "i": "^0.3.7",
     "mv": "^2.1.1",
-    "npm": "^10.2.5",
-    "postcss": "^8.4.24",
-    "tailwindcss": "^3.3.2",
-    "tailwindcss-scoped-preflight": "^2.0.2",
-    "vite": "^4.3.9",
-    "zod": "^3.22.4"
+    "npm": "^11.0.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-scoped-preflight": "^3.4.10",
+    "vite": "^6.0.7",
+    "zod": "^3.24.1"
   }
 }
