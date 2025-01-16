@@ -1,4 +1,4 @@
-const { scopedPreflightStyles } = require('tailwindcss-scoped-preflight');
+const { scopedPreflightStyles, isolateInsideOfContainer } = require('tailwindcss-scoped-preflight');
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -11,7 +11,7 @@ export default {
   },
   plugins: [
     scopedPreflightStyles({
-      cssSelector: '.WPVue',
+      isolationStrategy: isolateInsideOfContainer('.Sauron'),
     }),
   ],
 }
